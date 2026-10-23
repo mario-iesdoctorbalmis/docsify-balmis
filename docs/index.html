@@ -24,8 +24,17 @@
       auto2top: true,
       plugins: [
         function (hook) {
-          // Ajusta el ancho del sidebar a su contenido (entre 12rem y 24rem)
+          const rewriteLocalLinks = () => {
+            if (!['localhost', '127.0.0.1', '::1'].includes(location.hostname)) return;
+            document.querySelectorAll('a[href^="/docsify-balmis/"]').forEach(link => {
+              link.setAttribute('href', link.getAttribute('href').replace(/^\/docsify-balmis/, '') || '/');
+            });
+          };
+          if (['localhost', '127.0.0.1', '::1'].includes(location.hostname)) {
+            new MutationObserver(rewriteLocalLinks).observe(document.body, { childList: true, subtree: true });
+          }
           const fit = () => {
+            rewriteLocalLinks();
             const sb = document.querySelector('.sidebar');
             if (!sb) return;
             const rem = parseFloat(getComputedStyle(document.documentElement).fontSize);
