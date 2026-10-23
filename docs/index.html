@@ -11,12 +11,15 @@
 <body>
   <div id="app"></div>
   <script>
+    const isLocal = ['localhost', '127.0.0.1', '::1'].includes(location.hostname);
+    const navbarFile = `${location.origin}${isLocal ? '' : '/docsify-balmis'}/_navbar.md`;
     window.$docsify = {
       name: 'Balmis Docsify',
       repo: '',
       routerMode: 'history',
       alias: {
-        '/.*/_navbar.md': '/_navbar.md'
+        '/_navbar.md': navbarFile,
+        '/.*/_navbar.md': navbarFile
       },
       loadNavbar: true,
       loadSidebar: true,
@@ -25,12 +28,12 @@
       plugins: [
         function (hook) {
           const rewriteLocalLinks = () => {
-            if (!['localhost', '127.0.0.1', '::1'].includes(location.hostname)) return;
+            if (!isLocal) return;
             document.querySelectorAll('a[href^="/docsify-balmis/"]').forEach(link => {
               link.setAttribute('href', link.getAttribute('href').replace(/^\/docsify-balmis/, '') || '/');
             });
           };
-          if (['localhost', '127.0.0.1', '::1'].includes(location.hostname)) {
+          if (isLocal) {
             new MutationObserver(rewriteLocalLinks).observe(document.body, { childList: true, subtree: true });
           }
           const fit = () => {
