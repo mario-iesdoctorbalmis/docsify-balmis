@@ -2,5 +2,4 @@
 
 Elige un módulo en la barra superior: **ED**, **SI**, **LM**, **BDD**, **PROG**.
 
-
-[Repositorio en Github](https://github.com/mario-iesdoctorbalmis/docsify-balmis)
+Código de este proyecto en [https://mario-iesdoctorbalmis.github.io/docsify-balmis/](https://mario-iesdoctorbalmis.github.io/docsify-balmis/)
